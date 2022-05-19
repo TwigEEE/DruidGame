@@ -15,6 +15,7 @@ public class playerMovement : MonoBehaviour
     public Transform transform;
     public Rigidbody2D rigidbody2D;
     public SpriteRenderer SpriteRenderer;
+    public LayerMask tileLayerMask;
 
     private string moveType;
 
@@ -28,7 +29,13 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {   
-        jumping = false;
+        
+        if (IsGrounded())
+        {
+            Debug.Log("yes");
+            jumping = false;
+        }
+
         getMoveType();
 
 
@@ -64,10 +71,10 @@ public class playerMovement : MonoBehaviour
             scimitarAnimator.SetBool("running", false);
         }
 
-        Debug.Log(jumping);
+
         if (jump)
         {
-            rigidbody2D.AddForce(transform.up * jumpMultiplier, ForceMode2D.Impulse);
+            rigidbody2D.velocity = Vector2.up * jumpMultiplier;
             jump = false;
             jumping = true;
         }
@@ -120,5 +127,13 @@ public class playerMovement : MonoBehaviour
             colliderRunning2.enabled = true;
             colliderRunning3.enabled = true;
         }
+    }
+
+    private bool IsGrounded()
+    {
+
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(colliderIdle3.bounds.center, colliderIdle3.bounds.size, 0f, Vector2.down, 0.1f, tileLayerMask);
+        Debug.Log(raycastHit2D.collider);
+        return raycastHit2D.collider != null;
     }
 }
