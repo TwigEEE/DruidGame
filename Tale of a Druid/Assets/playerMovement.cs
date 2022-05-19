@@ -38,12 +38,15 @@ public class playerMovement : MonoBehaviour
     void FixedUpdate()
     {
 
+        SetColliders("idle");
+
         if (moveType == "right")
         {
             transform.position = transform.position + new Vector3(speed, 0, 0);
             SpriteRenderer.flipX = false;
             playerAnimator.SetBool("running", true);
             scimitarAnimator.SetBool("running", true);
+            SetColliders("running");
         }
 
         else if (moveType == "left")
@@ -52,6 +55,7 @@ public class playerMovement : MonoBehaviour
             SpriteRenderer.flipX = true;
             playerAnimator.SetBool("running", true);
             scimitarAnimator.SetBool("running", true);
+            SetColliders("running");
         }
 
         else 
