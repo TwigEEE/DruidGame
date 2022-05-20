@@ -8,13 +8,12 @@ public class playerMovement : MonoBehaviour
     public bool jump, jumping, running;
 
 
-    public Animator playerAnimator;
-    public Animator scimitarAnimator;
-    public BoxCollider2D colliderIdle1, colliderIdle2, colliderRunning1;
-    public CircleCollider2D colliderIdle3, colliderRunning2, colliderRunning3;
-    public Transform transform;
-    public Rigidbody2D rigidbody2D;
-    public SpriteRenderer SpriteRenderer;
+    public Animator playerAnimator, scimitarAnimator;
+    public CircleCollider2D playerHeadCollider;
+    public CapsuleCollider2D playerBodyCollider;
+    public Transform playerTransform;
+    public Rigidbody2D playerRigidbody;
+    public SpriteRenderer playerSpriteRenderer;
     public LayerMask tileLayerMask;
 
     private string moveType;
@@ -32,7 +31,6 @@ public class playerMovement : MonoBehaviour
         
         if (IsGrounded())
         {
-            Debug.Log("yes");
             jumping = false;
         }
 
@@ -49,8 +47,8 @@ public class playerMovement : MonoBehaviour
 
         if (moveType == "right")
         {
-            transform.position = transform.position + new Vector3(speed, 0, 0);
-            SpriteRenderer.flipX = false;
+            playerTransform.position = playerTransform.position + new Vector3(speed, 0, 0);
+            playerSpriteRenderer.flipX = false;
             playerAnimator.SetBool("running", true);
             scimitarAnimator.SetBool("running", true);
             SetColliders("running");
@@ -58,8 +56,8 @@ public class playerMovement : MonoBehaviour
 
         else if (moveType == "left")
         {
-            transform.position = transform.position + new Vector3(speed * -1, 0, 0);
-            SpriteRenderer.flipX = true;
+            playerTransform.position = playerTransform.position + new Vector3(speed * -1, 0, 0);
+            playerSpriteRenderer.flipX = true;
             playerAnimator.SetBool("running", true);
             scimitarAnimator.SetBool("running", true);
             SetColliders("running");
@@ -74,7 +72,7 @@ public class playerMovement : MonoBehaviour
 
         if (jump)
         {
-            rigidbody2D.velocity = Vector2.up * jumpMultiplier;
+            playerRigidbody.velocity = Vector2.up * jumpMultiplier;
             jump = false;
             jumping = true;
         }
@@ -110,30 +108,46 @@ public class playerMovement : MonoBehaviour
     {
         if (type == "idle")
         {
-            colliderIdle1.enabled = true;
-            colliderIdle2.enabled = true;
-            colliderIdle3.enabled = true;
-            colliderRunning1.enabled = false;
-            colliderRunning2.enabled = false;
-            colliderRunning3.enabled = false;
+            if (! playerSpriteRenderer.flipX)
+            {
+                playerBodyCollider.offset = new Vector2(0.25f, -0.76f);
+                playerBodyCollider.size = new Vector2(5f, 11f);
+                playerHeadCollider.offset = new Vector2(0.2f, 1.7f);
+                playerHeadCollider.radius = 3f;
+            }
+
+            else if (playerSpriteRenderer.flipX)
+            {
+                playerBodyCollider.offset = new Vector2(-0.25f, -0.76f);
+                playerBodyCollider.size = new Vector2(5f, 11f);
+                playerHeadCollider.offset = new Vector2(-0.2f, 1.7f);
+                playerHeadCollider.radius = 3f;
+            }
         }
         
         else if (type == "running")
         {
-            colliderIdle1.enabled = false;
-            colliderIdle2.enabled = false;
-            colliderIdle3.enabled = false;
-            colliderRunning1.enabled = true;
-            colliderRunning2.enabled = true;
-            colliderRunning3.enabled = true;
+            if (! playerSpriteRenderer.flipX)
+            {
+                playerBodyCollider.offset = new Vector2(1.7f, -3.36f);
+                playerBodyCollider.size = new Vector2(5f, 5.8f);
+                playerHeadCollider.offset = new Vector2(2.8f, 0.8f);
+                playerHeadCollider.radius = 3f;
+            }
+
+            else if (playerSpriteRenderer.flipX)
+            {
+                playerBodyCollider.offset = new Vector2(-1.7f, -3.36f);
+                playerBodyCollider.size = new Vector2(5f, 5.8f);
+                playerHeadCollider.offset = new Vector2(-2.8f, 0.8f);
+                playerHeadCollider.radius = 3f;
+            }
         }
     }
 
     private bool IsGrounded()
     {
-
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(colliderIdle3.bounds.center, colliderIdle3.bounds.size, 0f, Vector2.down, 0.1f, tileLayerMask);
-        Debug.Log(raycastHit2D.collider);
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(playerBodyCollider.bounds.center, playerBodyCollider.bounds.size, 0f, Vector2.down, 0.1f, tileLayerMask);
         return raycastHit2D.collider != null;
     }
 }
