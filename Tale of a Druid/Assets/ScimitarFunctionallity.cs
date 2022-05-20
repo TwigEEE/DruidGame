@@ -8,9 +8,12 @@ public class ScimitarFunctionallity : MonoBehaviour
     public Transform scimitarTransform, playerTransform, attackPoint;
     public float attackRange;
     public LayerMask enemyLayers;
+
+    public playerStats playerStats;
     
     private float timePassedSinceAttack = 10;
     private bool attacking;
+    private int damage, attackMultiplier;
 
 
     // Update is called once per frame
@@ -49,8 +52,18 @@ public class ScimitarFunctionallity : MonoBehaviour
 
         foreach(Collider2D enemy in hitEnemies)
         {
-            Debug.Log(enemy.name + " took 24 damage");
-            enemy.GetComponent<Health>().TakeDamge(24);
+            if (playerStats.getStat("strength") > playerStats.getStat("dexterity"))
+            {
+                attackMultiplier = playerStats.getModifier("strength");
+            }
+            else
+            {
+                attackMultiplier = playerStats.getModifier("dexterity");
+            }
+
+            damage = Random.Range(1, 7) + attackMultiplier;
+            Debug.Log(enemy.name + " took " + damage + " damage");
+            enemy.GetComponent<Health>().TakeDamge(damage);
         }
     }
 

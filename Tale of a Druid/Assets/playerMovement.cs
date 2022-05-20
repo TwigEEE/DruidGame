@@ -16,6 +16,8 @@ public class playerMovement : MonoBehaviour
     public SpriteRenderer playerSpriteRenderer;
     public LayerMask tileLayerMask;
 
+    public playerStats playerStats;
+
     private string moveType;
 
     void Start()
@@ -23,6 +25,9 @@ public class playerMovement : MonoBehaviour
         jump = false;
         jumping = false;
         running = false;
+        
+        speed = (playerStats.getStat("dexterity") * 0.01f) + 0.05f;
+        jumpMultiplier = (playerStats.getStat("strength") * 0.25f) + 5;
     }
 
 

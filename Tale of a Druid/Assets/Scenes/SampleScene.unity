@@ -30668,6 +30668,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
+  playerStats: {fileID: 1980769703}
 --- !u!1 &1980769681 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3456757987017631259, guid: cd0c0b167259b48ca89059f57131f103, type: 3}
@@ -30710,6 +30711,24 @@ CapsuleCollider2D:
   m_Offset: {x: 1.7, y: -3.36}
   m_Size: {x: 5, y: 5.8}
   m_Direction: 0
+--- !u!114 &1980769703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980769681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d42a06448640d44e0aa66bdb33f136c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 0
+  dexterity: 0
+  constitution: 0
+  intelligence: 0
+  wisdom: 0
+  charisma: 0
 --- !u!1001 &3456757988166054784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30787,8 +30806,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3456757987017631264, guid: cd0c0b167259b48ca89059f57131f103, type: 3}
       propertyPath: speed
-      value: 0.15
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3456757987017631264, guid: cd0c0b167259b48ca89059f57131f103, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1980769703}
     - target: {fileID: 3456757987017631264, guid: cd0c0b167259b48ca89059f57131f103, type: 3}
       propertyPath: colliderIdle
       value: 
@@ -30807,7 +30830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3456757987017631264, guid: cd0c0b167259b48ca89059f57131f103, type: 3}
       propertyPath: jumpMultiplier
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3456757987017631264, guid: cd0c0b167259b48ca89059f57131f103, type: 3}
       propertyPath: colliderRunning
