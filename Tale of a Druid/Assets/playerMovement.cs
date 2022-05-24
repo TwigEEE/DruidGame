@@ -1,12 +1,12 @@
-using System;
 using UnityEngine;
 
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
+    // --- Variables --- \\
     public float speed, jumpMultiplier;
     public bool jump, jumping, running;
-
+    private string moveType;
 
     public Animator playerAnimator, scimitarAnimator;
     public CircleCollider2D playerHeadCollider;
@@ -15,41 +15,35 @@ public class playerMovement : MonoBehaviour
     public Rigidbody2D playerRigidbody;
     public SpriteRenderer playerSpriteRenderer;
     public LayerMask tileLayerMask;
+    public PlayerStats playerStats;
 
-    public playerStats playerStats;
 
-    private string moveType;
-
-    void Start()
+    // --- Start Function --- \\
+    private void Start()
     {
         jump = false;
         jumping = false;
         running = false;
         
-        speed = (playerStats.getStat("dexterity") * 0.01f) + 0.05f;
-        jumpMultiplier = (playerStats.getStat("strength") * 0.25f) + 5;
+        speed = (playerStats.GetStat("dexterity") * 0.1f) + 0.1f;
+        jumpMultiplier = (playerStats.GetStat("strength") * 1.3f) + 8f;
     }
 
-
-    void Update()
+    // --- Update Function --- \\
+    private void Update()
     {   
-        
         if (IsGrounded())
         {
             jumping = false;
         }
 
-        getMoveType();
-
-
+        GetMoveType();
     }
 
 
-    void FixedUpdate()
+    // --- Fixed Update Function --- \\
+    private void FixedUpdate()
     {
-
-        SetColliders("idle");
-
         if (moveType == "right")
         {
             playerTransform.position = playerTransform.position + new Vector3(speed, 0, 0);
@@ -72,8 +66,8 @@ public class playerMovement : MonoBehaviour
         {
             playerAnimator.SetBool("running", false);
             scimitarAnimator.SetBool("running", false);
+            SetColliders("idle");
         }
-
 
         if (jump)
         {
@@ -83,9 +77,10 @@ public class playerMovement : MonoBehaviour
         }
     }
 
-    void getMoveType()
-    {
 
+    // --- Function To Get Player Input For Movement --- \\
+    public void GetMoveType()
+    {
         if(Input.GetKey("d")) 
         {
             moveType = "right";
@@ -108,7 +103,7 @@ public class playerMovement : MonoBehaviour
     }
 
 
-
+    // --- Function To Set The Player's Colliders --- \\
     private void SetColliders(string type)
     {
         if (type == "idle")
@@ -118,7 +113,6 @@ public class playerMovement : MonoBehaviour
                 playerBodyCollider.offset = new Vector2(0.25f, -0.76f);
                 playerBodyCollider.size = new Vector2(5f, 11f);
                 playerHeadCollider.offset = new Vector2(0.2f, 1.7f);
-                playerHeadCollider.radius = 3f;
             }
 
             else if (playerSpriteRenderer.flipX)
@@ -126,7 +120,6 @@ public class playerMovement : MonoBehaviour
                 playerBodyCollider.offset = new Vector2(-0.25f, -0.76f);
                 playerBodyCollider.size = new Vector2(5f, 11f);
                 playerHeadCollider.offset = new Vector2(-0.2f, 1.7f);
-                playerHeadCollider.radius = 3f;
             }
         }
         
@@ -137,7 +130,6 @@ public class playerMovement : MonoBehaviour
                 playerBodyCollider.offset = new Vector2(1.7f, -3.36f);
                 playerBodyCollider.size = new Vector2(5f, 5.8f);
                 playerHeadCollider.offset = new Vector2(2.8f, 0.8f);
-                playerHeadCollider.radius = 3f;
             }
 
             else if (playerSpriteRenderer.flipX)
@@ -145,14 +137,15 @@ public class playerMovement : MonoBehaviour
                 playerBodyCollider.offset = new Vector2(-1.7f, -3.36f);
                 playerBodyCollider.size = new Vector2(5f, 5.8f);
                 playerHeadCollider.offset = new Vector2(-2.8f, 0.8f);
-                playerHeadCollider.radius = 3f;
             }
         }
     }
 
+
+    // --- Function To Check If Player Is Touching The Ground --- \\
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(playerBodyCollider.bounds.center, playerBodyCollider.bounds.size, 0f, Vector2.down, 0.1f, tileLayerMask);
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(playerBodyCollider.bounds.center, playerBodyCollider.bounds.size, 0f, Vector2.down, 0.2f, tileLayerMask);
         return raycastHit2D.collider != null;
     }
 }

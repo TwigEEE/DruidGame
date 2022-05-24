@@ -1,30 +1,33 @@
 using UnityEngine;
 
-public class playerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     
+    // --- Variables --- \\
     public int strength, dexterity, constitution, intelligence, wisdom, charisma;
     private int strengthModifier, dexterityModifier, constitutionModifier, intelligenceModifier, wisdomModifier, charismaModifier;
 
     
-    // Start is called before the first frame update
-    void Start()
+    // --- Start Function --- \\
+    private void Start()
     {
-        strength = rollStat();
+        strength = RollStat();
         strengthModifier = Mathf.FloorToInt((strength - 10) / 2);
-        dexterity = rollStat();
+        dexterity = RollStat();
         dexterityModifier = Mathf.FloorToInt((dexterity - 10) / 2);
-        constitution = rollStat();
+        constitution = RollStat();
         constitutionModifier = Mathf.FloorToInt((constitution - 10) / 2);
-        intelligence = rollStat();
+        intelligence = RollStat();
         intelligenceModifier = Mathf.FloorToInt((intelligence - 10) / 2);
-        wisdom = rollStat();
+        wisdom = RollStat();
         wisdomModifier = Mathf.FloorToInt((wisdom - 10) / 2);
-        charisma = rollStat();
+        charisma = RollStat();
         charismaModifier = Mathf.FloorToInt((charisma - 10) / 2);
     }
 
-    int rollStat()
+    
+    // --- Function To Roll Dice For A Single Stat --- \\
+    private int RollStat()
     {
         int[] stats = new int[4];
         int lowStat = 10, stat = 0;
@@ -47,7 +50,9 @@ public class playerStats : MonoBehaviour
         return stat;
     }
 
-    public int getStat(string stat)
+    
+    // --- Function For Other Scripts To Get Player Stats --- \\
+    public int GetStat(string stat)
     {
         if (stat == "strength")
         {
@@ -80,7 +85,9 @@ public class playerStats : MonoBehaviour
         }
     }
 
-    public int getModifier(string stat)
+    
+    // --- Function For Other Scripts To Get Player Stat Modifiers --- \\
+    public int GetModifier(string stat)
     {
         if (stat == "strength")
         {

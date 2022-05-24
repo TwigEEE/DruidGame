@@ -3,37 +3,39 @@ using UnityEngine;
 public class ScimitarFunctionallity : MonoBehaviour
 {
     
+    // --- Variables --- \\
+    private float timePassedSinceAttack = 10;
+    private bool attacking;
+    private int damage, attackMultiplier;
+    
     public Animator scimitarAnimator;
     public SpriteRenderer scimitarSpriteRenderer, playerSpriteRenderer;
     public Transform scimitarTransform, playerTransform, attackPoint;
     public float attackRange;
     public LayerMask enemyLayers;
-
-    public playerStats playerStats;
-    
-    private float timePassedSinceAttack = 10;
-    private bool attacking;
-    private int damage, attackMultiplier;
+    public PlayerStats playerStats;
 
 
-    // Update is called once per frame
+    // --- Update Function --- \\
     void Update()
     {
         timePassedSinceAttack += Time.deltaTime;
         
-        setScimitarAndAttackPoint();
+        SetScimitarAndAttackPoint();
 
         if(Input.GetKey("space"))
         {
             if (timePassedSinceAttack > 1)
             {
-                attack();
+                Attack();
                 timePassedSinceAttack = 0;
             }
         }
     }
 
-    void attack()
+    
+    // --- Function To Make Player Attack --- \\
+    private void Attack()
     {
         attacking = true;
         
@@ -41,6 +43,7 @@ public class ScimitarFunctionallity : MonoBehaviour
         { 
             scimitarTransform.position = playerTransform.position + new Vector3(0.3f, 0, 0);
         }
+        
         else
         {
             scimitarTransform.position = playerTransform.position + new Vector3(-0.3f, 0, 0);
@@ -52,22 +55,24 @@ public class ScimitarFunctionallity : MonoBehaviour
 
         foreach(Collider2D enemy in hitEnemies)
         {
-            if (playerStats.getStat("strength") > playerStats.getStat("dexterity"))
+            if (playerStats.GetStat("strength") > playerStats.GetStat("dexterity"))
             {
-                attackMultiplier = playerStats.getModifier("strength");
+                attackMultiplier = playerStats.GetModifier("strength");
             }
+            
             else
             {
-                attackMultiplier = playerStats.getModifier("dexterity");
+                attackMultiplier = playerStats.GetModifier("dexterity");
             }
 
             damage = Random.Range(1, 7) + attackMultiplier;
-            Debug.Log(enemy.name + " took " + damage + " damage");
             enemy.GetComponent<Health>().TakeDamge(damage);
         }
     }
 
-    void setScimitarAndAttackPoint()
+    
+    // --- Function To Set The Positions Of The Scimitar And Attack Point --- \\
+    private void SetScimitarAndAttackPoint()
     {
         if (! attacking)
         {    
