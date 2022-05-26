@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ScimitarFunctionallity : MonoBehaviour
+public class EnemyScimitarFunctionallity : MonoBehaviour
 {
     
     // --- Variables --- \\
@@ -9,10 +9,10 @@ public class ScimitarFunctionallity : MonoBehaviour
     private int damage, attackMultiplier;
     
     public Animator scimitarAnimator;
-    public SpriteRenderer scimitarSpriteRenderer, playerSpriteRenderer;
-    public Transform scimitarTransform, playerTransform, attackPoint;
+    public SpriteRenderer scimitarSpriteRenderer, enemySpriteRenderer;
+    public Transform scimitarTransform, enemyTransform, attackPoint;
     public float attackRange;
-    public LayerMask enemyLayers;
+    public LayerMask playerLayers;
     public PlayerStats playerStats;
 
 
@@ -23,7 +23,7 @@ public class ScimitarFunctionallity : MonoBehaviour
         
         SetScimitarAndAttackPoint();
 
-        if(Input.GetKey("space"))
+        if(CheckIfPlayerInRange())
         {
             if (timePassedSinceAttack > 1)
             {
@@ -41,17 +41,17 @@ public class ScimitarFunctionallity : MonoBehaviour
         
         if (! scimitarSpriteRenderer.flipX)
         { 
-            scimitarTransform.position = playerTransform.position + new Vector3(0.3f, 0, 0);
+            scimitarTransform.position = enemyTransform.position + new Vector3(0.3f, 0, 0);
         }
         
         else
         {
-            scimitarTransform.position = playerTransform.position + new Vector3(-0.3f, 0, 0);
+            scimitarTransform.position = enemyTransform.position + new Vector3(-0.3f, 0, 0);
         }
         
         scimitarAnimator.SetTrigger("attack");
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
 
         foreach(Collider2D enemy in hitEnemies)
         {
@@ -76,7 +76,7 @@ public class ScimitarFunctionallity : MonoBehaviour
     {
         if (! attacking)
         {    
-            scimitarSpriteRenderer.flipX = playerSpriteRenderer.flipX;
+            scimitarSpriteRenderer.flipX = enemySpriteRenderer.flipX;
             
             if (! scimitarSpriteRenderer.flipX)
             {
@@ -92,8 +92,20 @@ public class ScimitarFunctionallity : MonoBehaviour
         if (timePassedSinceAttack > 0.45)
         {
             attacking = false;
-            scimitarTransform.position = playerTransform.position + new Vector3(0, 0, 0);
+            scimitarTransform.position = enemyTransform.position + new Vector3(0, 0, 0);
         }
+    }
+
+    private bool CheckIfPlayerInRange()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            return true;
+        }
+            
+        return false;
     }
 }
 
