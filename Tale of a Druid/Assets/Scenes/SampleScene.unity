@@ -31226,6 +31226,7 @@ GameObject:
   - component: {fileID: 2079439642}
   - component: {fileID: 2079439647}
   - component: {fileID: 2079439646}
+  - component: {fileID: 2079439648}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -31370,6 +31371,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &2079439648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079439641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5034483c928f694cb5d9d816d63af32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpMultiplier: 0
 --- !u!1 &278666255930894849
 GameObject:
   m_ObjectHideFlags: 0
@@ -31383,7 +31397,6 @@ GameObject:
   - component: {fileID: 278666255930894907}
   - component: {fileID: 278666255930894909}
   - component: {fileID: 278666255930894908}
-  - component: {fileID: 278666255930894910}
   - component: {fileID: 278666255930894911}
   m_Layer: 0
   m_Name: Goblin
@@ -31513,35 +31526,6 @@ CircleCollider2D:
   m_Offset: {x: 2.8, y: 0.8}
   serializedVersion: 2
   m_Radius: 3
---- !u!114 &278666255930894910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278666255930894849}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5034483c928f694cb5d9d816d63af32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  jumpMultiplier: 0
-  jump: 0
-  jumping: 0
-  running: 0
-  enemyAnimator: {fileID: 278666255930894907}
-  scimitarAnimator: {fileID: 1351503905}
-  enemyHeadCollider: {fileID: 278666255930894909}
-  enemyBodyCollider: {fileID: 278666255930894908}
-  enemyTransform: {fileID: 278666255930894855}
-  playerTransform: {fileID: 1167037853}
-  enemyRigidbody: {fileID: 0}
-  enemySpriteRenderer: {fileID: 278666255930894854}
-  tileLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  enemyStats: {fileID: 1980769703}
 --- !u!114 &278666255930894911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31558,3 +31542,10 @@ MonoBehaviour:
   enemySpriteRenderer: {fileID: 278666255930894854}
   enemyAnimator: {fileID: 278666255930894907}
   scimitarAnimator: {fileID: 1351503905}
+  enemyRigidbody: {fileID: 2079439646}
+  enemyCollider: {fileID: 2079439647}
+  tileLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  playerStats: {fileID: 1980769703}
+  jumpMultiplier: 0

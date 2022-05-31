@@ -1,30 +1,25 @@
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class enemyMovement : MonoBehaviour
 {
 
-    public float speed, jumpMultiplier;
-    public bool jump, jumping, running;
-    private string moveType;
+    private bool jumping;
+    public float jumpMultiplier;
 
-    public Animator enemyAnimator, scimitarAnimator;
-    public CircleCollider2D enemyHeadCollider;
-    public CapsuleCollider2D enemyBodyCollider;
-    public Transform enemyTransform, playerTransform;
+    //public AIPath aiPath;
+/*
     public Rigidbody2D enemyRigidbody;
-    public SpriteRenderer enemySpriteRenderer;
+    public CircleCollider2D enemyCollider;
     public LayerMask tileLayerMask;
-    public PlayerStats enemyStats;
+    public PlayerStats playerStats;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        jump = false;
         jumping = false;
-        running = false;
         
-        speed = 0.05f;
-        jumpMultiplier = 5f;
+        jumpMultiplier = (playerStats.GetStat("strength") * 1.3f) + 8f;
     }
 
     // Update is called once per frame
@@ -35,112 +30,40 @@ public class EnemyMovement : MonoBehaviour
             jumping = false;
         }
 
-        GetMoveType();
-    }
-
-    // --- Fixed Update Function --- \\
-    private void FixedUpdate()
-    {
-        if (moveType == "right")
+        if(shouldJump)
         {
-            enemyTransform.position = enemyTransform.position + new Vector3(speed, 0, 0);
-            enemySpriteRenderer.flipX = false;
-            enemyAnimator.SetBool("running", true);
-            scimitarAnimator.SetBool("running", true);
-            SetColliders("running");
-        }
-
-        else if (moveType == "left")
-        {
-            enemyTransform.position = enemyTransform.position + new Vector3(speed * -1, 0, 0);
-            enemySpriteRenderer.flipX = true;
-            enemyAnimator.SetBool("running", true);
-            scimitarAnimator.SetBool("running", true);
-            SetColliders("running");
-        }
-
-        else 
-        {
-            enemyAnimator.SetBool("running", false);
-            scimitarAnimator.SetBool("running", false);
-            SetColliders("idle");
-        }
-
-        if (jump)
-        {
-            enemyRigidbody.velocity = Vector2.up * jumpMultiplier;
-            jump = false;
-            jumping = true;
+            if(! jumping)
+            {
+                enemyRigidbody.velocity = Vector2.up * jumpMultiplier;
+                jumping = true;
+            }
         }
     }
 
-
-
-
-    public void GetMoveType()
+    private bool shouldJump()
     {
-        if(playerTransform.position.x > enemyTransform.position.x) 
+        if(aiPath.desiredVelocity.x >= 0.01f)
         {
-            moveType = "right";
+            RaycastHit2D raycastHit2D = Physics2D.BoxCast(enemyCollider.bounds.center, enemyCollider.bounds.size, 0f, Vector2.right, 0.2f, tileLayerMask);
         }
 
-        else if(playerTransform.position.x < enemyTransform.position.x) 
+        else if (aiPath.desiredVelocity.x <= -0.01f)
         {
-            moveType = "left";
+           RaycastHit2D raycastHit2D = Physics2D.BoxCast(enemyCollider.bounds.center, enemyCollider.bounds.size, 0f, Vector2.left, 0.2f, tileLayerMask);
         }
 
         else
         {
-            moveType = "";
+            return false;
         }
 
-        if(Input.GetKey("w") && ! jumping) 
-        {
-            jump = true;
-        }
+        return raycastHit2D.collider != null;
     }
-
-    private void SetColliders(string type)
-    {
-        if (type == "idle")
-        {
-            if (! enemySpriteRenderer.flipX)
-            {
-                enemyBodyCollider.offset = new Vector2(0.25f, -0.76f);
-                enemyBodyCollider.size = new Vector2(5f, 11f);
-                enemyHeadCollider.offset = new Vector2(0.2f, 1.7f);
-            }
-
-            else if (enemySpriteRenderer.flipX)
-            {
-                enemyBodyCollider.offset = new Vector2(-0.25f, -0.76f);
-                enemyBodyCollider.size = new Vector2(5f, 11f);
-                enemyHeadCollider.offset = new Vector2(-0.2f, 1.7f);
-            }
-        }
-        
-        else if (type == "running")
-        {
-            if (! enemySpriteRenderer.flipX)
-            {
-                enemyBodyCollider.offset = new Vector2(1.7f, -3.36f);
-                enemyBodyCollider.size = new Vector2(5f, 5.8f);
-                enemyHeadCollider.offset = new Vector2(2.8f, 0.8f);
-            }
-
-            else if (enemySpriteRenderer.flipX)
-            {
-                enemyBodyCollider.offset = new Vector2(-1.7f, -3.36f);
-                enemyBodyCollider.size = new Vector2(5f, 5.8f);
-                enemyHeadCollider.offset = new Vector2(-2.8f, 0.8f);
-            }
-        }
-    }
-
 
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(enemyBodyCollider.bounds.center, enemyBodyCollider.bounds.size, 0f, Vector2.down, 0.2f, tileLayerMask);
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(enemyCollider.bounds.center, enemyCollider.bounds.size, 0f, Vector2.down, 0.2f, tileLayerMask);
         return raycastHit2D.collider != null;
     }
+    */
 }
