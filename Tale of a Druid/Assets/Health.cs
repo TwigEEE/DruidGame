@@ -4,8 +4,6 @@ public class Health : MonoBehaviour
 {
 
     public int maxHealth = 100;
-    public SpriteRenderer enemyRenderer;
-    public BoxCollider2D enemyCollider;
 
    
     private int currentHealth;
@@ -27,6 +25,7 @@ public class Health : MonoBehaviour
     public void TakeDamge(int damage)
     {
         currentHealth -= damage;
+        Debug.Log(gameObject.name + " took " + damage + " damage!!");
 
         if (currentHealth <= 0)
         {
@@ -37,8 +36,5 @@ public class Health : MonoBehaviour
     void Die() 
     {
         Debug.Log("died");
-        enemyRenderer.enabled = false;
-        enemyCollider.enabled = false;
-
     }
 }

@@ -30802,7 +30802,7 @@ MonoBehaviour:
   playerSpriteRenderer: {fileID: 1167037852}
   tileLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   playerStats: {fileID: 1980769703}
 --- !u!95 &1167037857
 Animator:
@@ -31179,8 +31179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  enemyRenderer: {fileID: 1167037852}
-  enemyCollider: {fileID: 0}
 --- !u!1 &2064744217
 GameObject:
   m_ObjectHideFlags: 0
@@ -31398,7 +31396,8 @@ GameObject:
   - component: {fileID: 278666255930894909}
   - component: {fileID: 278666255930894908}
   - component: {fileID: 278666255930894911}
-  m_Layer: 0
+  - component: {fileID: 278666255930894912}
+  m_Layer: 10
   m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31501,7 +31500,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278666255930894849}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -31517,7 +31516,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278666255930894849}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -31549,3 +31548,16 @@ MonoBehaviour:
     m_Bits: 512
   playerStats: {fileID: 1980769703}
   jumpMultiplier: 0
+--- !u!114 &278666255930894912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278666255930894849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36152179c50ce48d4a36d24487e02882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100

@@ -28,8 +28,7 @@ public class GoblinGraphics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Velovity: " + enemyRigidbody.velocity);
-
+       
         if(aiPath.desiredVelocity.x >= 0.01f)
         {
             enemySpriteRenderer.flipX = false;
